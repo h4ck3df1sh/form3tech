@@ -12,12 +12,12 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: '1.17'
-      - name: Install CycloneDX tool
-        run: go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
-      - name: Build application
-        run: go build -o app
-      - name: Create SBOM with CycloneDX
-        run: cyclonedx-gomod -o test.app.bom.xml
+      - name: Download cyclonedx-gomod
+        uses: CycloneDX/gh-gomod-generate-sbom@v1
+        with:
+          version: v1
+      - name: Generate SBOM
+        run: cyclonedx-gomod app -licenses -files -output test.app.bom.xml -main cmd/acme-app
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v2
         with:
@@ -31,4 +31,3 @@ jobs:
       - name: Display contents of SBOM artifact
         run: |
           cat ./test.app.bom.xml
-
