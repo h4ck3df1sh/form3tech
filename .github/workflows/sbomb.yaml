@@ -1,4 +1,4 @@
-name: SAST - Dependecies - SBOMB - GO
+name: SAST - Dependecies - SBOM - GO
 on:
   push:
     branches: [ main ]
@@ -19,7 +19,7 @@ jobs:
       - name: Build application
         run: go build -o app
       - name: Create SBOM with CycloneDX
-        run: cyclonedx.go -o test.app.bom.xml
+        run: sudo cyclonedx.go -o test.app.bom.xml
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v2
         with:
