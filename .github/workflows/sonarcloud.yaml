@@ -1,4 +1,4 @@
-name: SAST - Secure Code
+name: SAST - Secure Code - SonarCloud
 on:
   push:
     branches:
