@@ -1,4 +1,4 @@
-name: SAST - Dependencies
+name: SAST - Dependencies GO
 on: push
 jobs:
   build:
@@ -13,10 +13,7 @@ jobs:
       - name: Build application
         run: go build -o app
       - name: Create SBOM with CycloneDX
-        uses: CycloneDX/gh-action-generate-bom@v2
-        with:
-          output: './test.app.bom.xml'
-          format: 'cyclonedx-go'
+        run: cyclonedx-go -o test.app.bom.xml
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v2
         with:
