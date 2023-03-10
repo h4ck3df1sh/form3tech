@@ -17,7 +17,7 @@ jobs:
         with:
           version: v1
       - name: Generate SBOM
-        run: cyclonedx-gomod app -output test.app.bom.xml -main cmd/main.go 
+        run: cyclonedx-gomod app -output test.app.bom.xml -main cmd/innsecure/main 
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v2
         with:
