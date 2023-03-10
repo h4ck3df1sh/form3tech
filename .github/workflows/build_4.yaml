@@ -1,0 +1,33 @@
+name: SAST - Dependencies
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Install and build Go
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.17'
+      - name: Build application
+        run: go build -o app
+      - name: Create SBOM with CycloneDX
+        uses: CycloneDX/gh-action-generate-bom@v2
+        with:
+          output: './test.app.bom.xml'
+          format: 'cyclonedx-go'
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: sbom
+          path: './test.app.bom.xml'
+      - name: Download SBOM artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: sbom
+          path: './'
+      - name: Display contents of SBOM artifact
+        run: |
+          cat ./test.app.bom.xml
+
