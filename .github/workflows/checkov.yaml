@@ -29,6 +29,13 @@ jobs:
           checkov -d . | tee checkov-output.txt
           echo '::set-output name=checkov-output::$(cat checkov-output.txt)'
 
+      - name: Upload Checkov Output Artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: checkov-output
+          path: checkov-output.txt
+
       - name: Show Checkov Results
         if: ${{ steps.checkov.outcome == 'success' }}
         run: |
