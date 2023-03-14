@@ -26,10 +26,11 @@ jobs:
       - name: Test with Checkov
         id: checkov
         run: |
-          checkov -d . -o checkov-results.txt
+          checkov -d . > checkov-results.txt
 
       - name: Upload Checkov Results
         uses: actions/upload-artifact@v2
         with:
           name: checkov-results
           path: checkov-results.txt
+
