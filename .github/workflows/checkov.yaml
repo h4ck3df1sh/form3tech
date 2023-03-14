@@ -1,0 +1,21 @@
+name: Checkov Analysis
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  checkov:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker image
+        run: docker build -t my-go-project .
+      - name: Analyze IAC with Checkov
+        run: |
+          docker run --rm -v $PWD:/tmp/checkov -w /tmp/checkov bridgecrew/checkov -d /tmp/checkov -s -v
+
